@@ -30,13 +30,9 @@ public class PasswordService {
 
     private final List<Senha> senhas = new CopyOnWriteArrayList<>();
 
-    // Guarda a duração (em segundos) de cada atendimento finalizado, para calcular médias
     private final List<Long> temposAtendimentoSegundos = new CopyOnWriteArrayList<>();
 
-    // Diferencial: clientes conectados via SSE, para receber atualização em tempo real
     private final List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
-
-    // ===================== CRUD DE SENHAS =====================
 
     public synchronized Senha criarSenha(CreatePassword request) {
         Senha senha = new Senha();
@@ -144,8 +140,6 @@ public class PasswordService {
         return prefixo + String.format("%03d", numero);
     }
 
-    // ===================== DIFERENCIAL: TEMPO ESTIMADO DE ESPERA =====================
-
     public List<SenhaFilaDTO> listarFilaComEstimativa() {
         List<Senha> fila = listarAguardando();
         double tempoMedioAtendimento = calcularTempoMedioAtendimentoMinutos();
@@ -153,7 +147,6 @@ public class PasswordService {
         List<SenhaFilaDTO> resultado = new ArrayList<>();
         for (int i = 0; i < fila.size(); i++) {
             long posicao = i + 1;
-            // Estimativa simples: posição na fila x tempo médio de atendimento (considerando 1 guichê ativo)
             double estimativa = posicao * tempoMedioAtendimento;
             resultado.add(new SenhaFilaDTO(fila.get(i), posicao, arredondar(estimativa)));
         }
@@ -162,7 +155,7 @@ public class PasswordService {
 
     private double calcularTempoMedioAtendimentoMinutos() {
         if (temposAtendimentoSegundos.isEmpty()) {
-            return 3.0; // valor padrão (chute inicial) enquanto não há histórico
+            return 3.0;
         }
         double mediaSegundos = temposAtendimentoSegundos.stream()
                 .mapToLong(Long::longValue)
@@ -170,8 +163,6 @@ public class PasswordService {
                 .orElse(180);
         return mediaSegundos / 60.0;
     }
-
-    // ===================== DIFERENCIAL: ESTATÍSTICAS =====================
 
     public EstatisticasDTO obterEstatisticas() {
         long aguardando = senhas.stream()
@@ -188,7 +179,6 @@ public class PasswordService {
         return new EstatisticasDTO(aguardando, atendidas, tempoMedioAtendimento, tempoMedioEspera);
     }
 
-    // Tempo médio real de espera das senhas já chamadas (createdAt -> calledAt)
     private double calcularTempoMedioEsperaReal() {
         List<Senha> chamadasOuFinalizadas = senhas.stream()
                 .filter(s -> s.getCalledAt() != null)
@@ -208,10 +198,8 @@ public class PasswordService {
         return Math.round(valor * 10.0) / 10.0;
     }
 
-    // ===================== DIFERENCIAL: TEMPO REAL (SSE) =====================
-
     public SseEmitter registrarEmitter() {
-        SseEmitter emitter = new SseEmitter(0L); // sem timeout, fica aberto
+        SseEmitter emitter = new SseEmitter(0L);
         emitters.add(emitter);
         emitter.onCompletion(() -> emitters.remove(emitter));
         emitter.onTimeout(() -> emitters.remove(emitter));
