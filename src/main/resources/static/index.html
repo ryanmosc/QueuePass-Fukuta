@@ -1,11 +1,24 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <title>Painel de Senhas</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background: #0f172a; color: #f1f5f9; height: 100vh; display: flex; flex-direction: column; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f1f5f9;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
 
         header {
             background: #1e293b;
@@ -15,9 +28,23 @@
             align-items: center;
             border-bottom: 3px solid #38bdf8;
         }
-        header h1 { font-size: 28px; color: #38bdf8; }
-        .header-info { display: flex; align-items: center; gap: 20px; }
-        #relogio { font-size: 20px; color: #94a3b8; }
+
+        header h1 {
+            font-size: 28px;
+            color: #38bdf8;
+        }
+
+        .header-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        #relogio {
+            font-size: 20px;
+            color: #94a3b8;
+        }
+
         #statusConexao {
             font-size: 13px;
             padding: 5px 12px;
@@ -25,8 +52,16 @@
             background: #334155;
             color: #94a3b8;
         }
-        #statusConexao.online { background: #14532d; color: #4ade80; }
-        #statusConexao.offline { background: #450a0a; color: #f87171; }
+
+        #statusConexao.online {
+            background: #14532d;
+            color: #4ade80;
+        }
+
+        #statusConexao.offline {
+            background: #450a0a;
+            color: #f87171;
+        }
 
         main {
             flex: 1;
@@ -37,7 +72,12 @@
             overflow: hidden;
         }
 
-        .coluna-esquerda { display: flex; flex-direction: column; gap: 20px; overflow: hidden; }
+        .coluna-esquerda {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            overflow: hidden;
+        }
 
         .painel-atual {
             background: #1e293b;
@@ -49,21 +89,39 @@
             padding: 30px;
             border: 2px solid #334155;
         }
-        .painel-atual h2 { color: #94a3b8; font-size: 16px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+
+        .painel-atual h2 {
+            color: #94a3b8;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
         .senha-atual {
             font-size: 80px;
             font-weight: bold;
             color: #4ade80;
             text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
         }
-        .senha-atual.prioridade { color: #fb923c; text-shadow: 0 0 20px rgba(251, 146, 60, 0.5); }
-        .guiche-atual { font-size: 26px; color: #f1f5f9; margin-top: 8px; }
+
+        .senha-atual.prioridade {
+            color: #fb923c;
+            text-shadow: 0 0 20px rgba(251, 146, 60, 0.5);
+        }
+
+        .guiche-atual {
+            font-size: 26px;
+            color: #f1f5f9;
+            margin-top: 8px;
+        }
 
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 15px;
         }
+
         .stat-card {
             background: #1e293b;
             border-radius: 12px;
@@ -71,8 +129,20 @@
             border: 2px solid #334155;
             text-align: center;
         }
-        .stat-card .valor { font-size: 30px; font-weight: bold; color: #38bdf8; }
-        .stat-card .rotulo { font-size: 12px; color: #94a3b8; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+
+        .stat-card .valor {
+            font-size: 30px;
+            font-weight: bold;
+            color: #38bdf8;
+        }
+
+        .stat-card .rotulo {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
 
         .lista-historico {
             background: #1e293b;
@@ -81,7 +151,15 @@
             border: 2px solid #334155;
             overflow-y: auto;
         }
-        .lista-historico h2 { color: #94a3b8; font-size: 16px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; }
+
+        .lista-historico h2 {
+            color: #94a3b8;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
         .item-historico {
             display: flex;
             justify-content: space-between;
@@ -92,10 +170,20 @@
             font-size: 17px;
             border-left: 4px solid #4ade80;
         }
-        .item-historico.prioridade { border-left-color: #fb923c; }
-        .item-historico span:last-child { color: #94a3b8; font-size: 14px; }
 
-        .coluna-direita { overflow-y: auto; }
+        .item-historico.prioridade {
+            border-left-color: #fb923c;
+        }
+
+        .item-historico span:last-child {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        .coluna-direita {
+            overflow-y: auto;
+        }
+
         .fila-item {
             display: flex;
             justify-content: space-between;
@@ -106,9 +194,20 @@
             border-radius: 8px;
             font-size: 14px;
         }
-        .fila-item .codigo { font-weight: bold; font-size: 16px; }
-        .fila-item.prioridade .codigo { color: #fb923c; }
-        .fila-item .espera { color: #94a3b8; font-size: 13px; }
+
+        .fila-item .codigo {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .fila-item.prioridade .codigo {
+            color: #fb923c;
+        }
+
+        .fila-item .espera {
+            color: #94a3b8;
+            font-size: 13px;
+        }
 
         footer {
             background: #1e293b;
@@ -119,6 +218,7 @@
             border-top: 3px solid #38bdf8;
             flex-wrap: wrap;
         }
+
         button {
             padding: 14px 24px;
             font-size: 16px;
@@ -128,217 +228,248 @@
             font-weight: bold;
             transition: transform 0.1s;
         }
-        button:active { transform: scale(0.96); }
-        .btn-normal { background: #4ade80; color: #0f172a; }
-        .btn-prioridade { background: #fb923c; color: #0f172a; }
-        .btn-chamar { background: #38bdf8; color: #0f172a; }
-        select { padding: 14px; border-radius: 8px; border: none; font-size: 16px; }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        .btn-normal {
+            background: #4ade80;
+            color: #0f172a;
+        }
+
+        .btn-prioridade {
+            background: #fb923c;
+            color: #0f172a;
+        }
+
+        .btn-chamar {
+            background: #38bdf8;
+            color: #0f172a;
+        }
+
+        select {
+            padding: 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+        }
 
         @keyframes piscar {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
         }
-        .piscando { animation: piscar 1s infinite; }
+
+        .piscando {
+            animation: piscar 1s infinite;
+        }
     </style>
 </head>
+
 <body>
 
-<header>
-    <h1>🎫 Painel de Senhas</h1>
-    <div class="header-info">
-        <span id="statusConexao">conectando...</span>
-        <span id="relogio"></span>
-    </div>
-</header>
+    <header>
+        <h1>🎫 Painel de Senhas</h1>
+        <div class="header-info">
+            <span id="statusConexao">conectando...</span>
+            <span id="relogio"></span>
+        </div>
+    </header>
 
-<main>
-    <div class="coluna-esquerda">
-        <div class="painel-atual">
-            <h2>Senha Chamada</h2>
-            <div id="senhaAtual" class="senha-atual">--</div>
-            <div id="guicheAtual" class="guiche-atual">Aguardando chamada...</div>
+    <main>
+        <div class="coluna-esquerda">
+            <div class="painel-atual">
+                <h2>Senha Chamada</h2>
+                <div id="senhaAtual" class="senha-atual">--</div>
+                <div id="guicheAtual" class="guiche-atual">Aguardando chamada...</div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="valor" id="statAguardando">0</div>
+                    <div class="rotulo">Na fila</div>
+                </div>
+                <div class="stat-card">
+                    <div class="valor" id="statAtendidas">0</div>
+                    <div class="rotulo">Atendidas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="valor" id="statTempoAtendimento">0 min</div>
+                    <div class="rotulo">Tempo médio atend.</div>
+                </div>
+                <div class="stat-card">
+                    <div class="valor" id="statTempoEspera">0 min</div>
+                    <div class="rotulo">Tempo médio espera</div>
+                </div>
+            </div>
+
+            <div class="lista-historico">
+                <h2>Últimas Chamadas</h2>
+                <div id="historico"></div>
+            </div>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="valor" id="statAguardando">0</div>
-                <div class="rotulo">Na fila</div>
-            </div>
-            <div class="stat-card">
-                <div class="valor" id="statAtendidas">0</div>
-                <div class="rotulo">Atendidas</div>
-            </div>
-            <div class="stat-card">
-                <div class="valor" id="statTempoAtendimento">0 min</div>
-                <div class="rotulo">Tempo médio atend.</div>
-            </div>
-            <div class="stat-card">
-                <div class="valor" id="statTempoEspera">0 min</div>
-                <div class="rotulo">Tempo médio espera</div>
-            </div>
+        <div class="coluna-direita lista-historico">
+            <h2>Fila de Espera (com previsão)</h2>
+            <div id="filaDetalhada"></div>
         </div>
+    </main>
 
-        <div class="lista-historico">
-            <h2>Últimas Chamadas</h2>
-            <div id="historico"></div>
-        </div>
-    </div>
+    <footer>
+        <button class="btn-normal" onclick="gerarSenha('NORMAL')">+ Senha Normal</button>
+        <button class="btn-prioridade" onclick="gerarSenha('PRIORIDADE')">+ Senha Prioritária</button>
+        <select id="guicheSelect">
+            <option value="01">Guichê 01</option>
+            <option value="02">Guichê 02</option>
+            <option value="03">Guichê 03</option>
+        </select>
+        <button class="btn-chamar" onclick="chamarSenha()">🔊 Chamar Próxima</button>
+    </footer>
 
-    <div class="coluna-direita lista-historico">
-        <h2>Fila de Espera (com previsão)</h2>
-        <div id="filaDetalhada"></div>
-    </div>
-</main>
+    <script>
+        const API_URL = '/api';
 
-<footer>
-    <button class="btn-normal" onclick="gerarSenha('NORMAL')">+ Senha Normal</button>
-    <button class="btn-prioridade" onclick="gerarSenha('PRIORIDADE')">+ Senha Prioritária</button>
-    <select id="guicheSelect">
-        <option value="01">Guichê 01</option>
-        <option value="02">Guichê 02</option>
-        <option value="03">Guichê 03</option>
-    </select>
-    <button class="btn-chamar" onclick="chamarSenha()">🔊 Chamar Próxima</button>
-</footer>
-
-<script>
-    const API_URL = '/api';
-
-    function atualizarRelogio() {
-        document.getElementById('relogio').textContent = new Date().toLocaleTimeString('pt-BR');
-    }
-    setInterval(atualizarRelogio, 1000);
-    atualizarRelogio();
-
-    async function gerarSenha(tipo) {
-        try {
-            const res = await fetch(`${API_URL}/gerar-senha`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ passwordType: tipo })
-            });
-            const senha = await res.json();
-            alert(`Senha gerada: ${senha.code}`);
-            // Não precisa recarregar manualmente: o SSE atualiza sozinho
-        } catch (e) {
-            alert('Erro ao gerar senha. Verifique se a API está rodando.');
-            console.error(e);
+        function atualizarRelogio() {
+            document.getElementById('relogio').textContent = new Date().toLocaleTimeString('pt-BR');
         }
-    }
+        setInterval(atualizarRelogio, 1000);
+        atualizarRelogio();
 
-    async function chamarSenha() {
-        const guiche = document.getElementById('guicheSelect').value;
-        try {
-            const res = await fetch(`${API_URL}/chamar-senha`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ guiche })
+        async function gerarSenha(tipo) {
+            try {
+                const res = await fetch(`${API_URL}/gerar-senha`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ passwordType: tipo })
+                });
+                const senha = await res.json();
+                alert(`Senha gerada: ${senha.code}`);
+            } catch (e) {
+                alert('Erro ao gerar senha. Verifique se a API está rodando.');
+                console.error(e);
+            }
+        }
+
+        async function chamarSenha() {
+            const guiche = document.getElementById('guicheSelect').value;
+            try {
+                const res = await fetch(`${API_URL}/chamar-senha`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ guiche })
+                });
+
+                if (res.status === 204) {
+                    alert('Nenhuma senha aguardando na fila.');
+                    return;
+                }
+
+                const senha = await res.json();
+                exibirSenhaChamada(senha);
+                falarSenha(senha, guiche);
+            } catch (e) {
+                alert('Erro ao chamar senha. Verifique se a API está rodando.');
+                console.error(e);
+            }
+        }
+
+        function exibirSenhaChamada(senha) {
+            const el = document.getElementById('senhaAtual');
+            el.textContent = senha.code;
+            el.className = 'senha-atual piscando' + (senha.passwordType === 'PRIORIDADE' ? ' prioridade' : '');
+            document.getElementById('guicheAtual').textContent = `Guichê ${senha.guiche}`;
+            setTimeout(() => el.classList.remove('piscando'), 4000);
+        }
+
+        function falarSenha(senha, guiche) {
+            if (!('speechSynthesis' in window)) return;
+            const codigoFalado = senha.code.split('').join(' ');
+            const utter = new SpeechSynthesisUtterance(`Senha ${codigoFalado}, guichê ${guiche}`);
+            utter.lang = 'pt-BR';
+            speechSynthesis.speak(utter);
+        }
+
+        async function carregarHistorico() {
+            const res = await fetch(`${API_URL}/senhas/chamadas`);
+            const lista = await res.json();
+            const container = document.getElementById('historico');
+            container.innerHTML = '';
+            lista.forEach(senha => {
+                const div = document.createElement('div');
+                div.className = 'item-historico' + (senha.passwordType === 'PRIORIDADE' ? ' prioridade' : '');
+                div.innerHTML = `<span>${senha.code}</span><span>Guichê ${senha.guiche}</span>`;
+                container.appendChild(div);
             });
+        }
 
-            if (res.status === 204) {
-                alert('Nenhuma senha aguardando na fila.');
+        async function carregarFilaDetalhada() {
+            const res = await fetch(`${API_URL}/senhas/aguardando/detalhado`);
+            const lista = await res.json();
+            const container = document.getElementById('filaDetalhada');
+            container.innerHTML = '';
+
+            if (lista.length === 0) {
+                container.innerHTML = '<p style="color:#64748b; font-size:14px;">Nenhuma senha na fila.</p>';
                 return;
             }
 
-            const senha = await res.json();
-            exibirSenhaChamada(senha);
-            falarSenha(senha, guiche);
-        } catch (e) {
-            alert('Erro ao chamar senha. Verifique se a API está rodando.');
-            console.error(e);
-        }
-    }
-
-    function exibirSenhaChamada(senha) {
-        const el = document.getElementById('senhaAtual');
-        el.textContent = senha.code;
-        el.className = 'senha-atual piscando' + (senha.passwordType === 'PRIORIDADE' ? ' prioridade' : '');
-        document.getElementById('guicheAtual').textContent = `Guichê ${senha.guiche}`;
-        setTimeout(() => el.classList.remove('piscando'), 4000);
-    }
-
-    function falarSenha(senha, guiche) {
-        if (!('speechSynthesis' in window)) return;
-        const codigoFalado = senha.code.split('').join(' ');
-        const utter = new SpeechSynthesisUtterance(`Senha ${codigoFalado}, guichê ${guiche}`);
-        utter.lang = 'pt-BR';
-        speechSynthesis.speak(utter);
-    }
-
-    async function carregarHistorico() {
-        const res = await fetch(`${API_URL}/senhas/chamadas`);
-        const lista = await res.json();
-        const container = document.getElementById('historico');
-        container.innerHTML = '';
-        lista.forEach(senha => {
-            const div = document.createElement('div');
-            div.className = 'item-historico' + (senha.passwordType === 'PRIORIDADE' ? ' prioridade' : '');
-            div.innerHTML = `<span>${senha.code}</span><span>Guichê ${senha.guiche}</span>`;
-            container.appendChild(div);
-        });
-    }
-
-    async function carregarFilaDetalhada() {
-        const res = await fetch(`${API_URL}/senhas/aguardando/detalhado`);
-        const lista = await res.json();
-        const container = document.getElementById('filaDetalhada');
-        container.innerHTML = '';
-
-        if (lista.length === 0) {
-            container.innerHTML = '<p style="color:#64748b; font-size:14px;">Nenhuma senha na fila.</p>';
-            return;
-        }
-
-        lista.forEach(item => {
-            const div = document.createElement('div');
-            const prioridade = item.senha.passwordType === 'PRIORIDADE';
-            div.className = 'fila-item' + (prioridade ? ' prioridade' : '');
-            div.innerHTML = `
+            lista.forEach(item => {
+                const div = document.createElement('div');
+                const prioridade = item.senha.passwordType === 'PRIORIDADE';
+                div.className = 'fila-item' + (prioridade ? ' prioridade' : '');
+                div.innerHTML = `
                 <span class="codigo">${item.senha.code}</span>
                 <span>${item.posicaoNaFila}ª posição</span>
                 <span class="espera">~${item.tempoEsperaEstimadoMinutos} min</span>
             `;
-            container.appendChild(div);
-        });
-    }
+                container.appendChild(div);
+            });
+        }
 
-    async function carregarEstatisticas() {
-        const res = await fetch(`${API_URL}/estatisticas`);
-        const stats = await res.json();
-        document.getElementById('statAguardando').textContent = stats.totalAguardando;
-        document.getElementById('statAtendidas').textContent = stats.totalAtendidasHoje;
-        document.getElementById('statTempoAtendimento').textContent = stats.tempoMedioAtendimentoMinutos + ' min';
-        document.getElementById('statTempoEspera').textContent = stats.tempoMedioEsperaMinutos + ' min';
-    }
+        async function carregarEstatisticas() {
+            const res = await fetch(`${API_URL}/estatisticas`);
+            const stats = await res.json();
+            document.getElementById('statAguardando').textContent = stats.totalAguardando;
+            document.getElementById('statAtendidas').textContent = stats.totalAtendidasHoje;
+            document.getElementById('statTempoAtendimento').textContent = stats.tempoMedioAtendimentoMinutos + ' min';
+            document.getElementById('statTempoEspera').textContent = stats.tempoMedioEsperaMinutos + ' min';
+        }
 
-    function atualizarTudo() {
-        carregarHistorico();
-        carregarFilaDetalhada();
-        carregarEstatisticas();
-    }
+        function atualizarTudo() {
+            carregarHistorico();
+            carregarFilaDetalhada();
+            carregarEstatisticas();
+        }
 
-    // ===================== DIFERENCIAL: SSE (tempo real) =====================
-    function conectarEventos() {
-        const eventSource = new EventSource(`${API_URL}/eventos`);
-        const statusEl = document.getElementById('statusConexao');
+        function conectarEventos() {
+            const eventSource = new EventSource(`${API_URL}/eventos`);
+            const statusEl = document.getElementById('statusConexao');
 
-        eventSource.onopen = () => {
-            statusEl.textContent = '🟢 ao vivo';
-            statusEl.className = 'online';
-        };
+            eventSource.onopen = () => {
+                statusEl.textContent = '🟢 ao vivo';
+                statusEl.className = 'online';
+            };
 
-        eventSource.onerror = () => {
-            statusEl.textContent = '🔴 reconectando...';
-            statusEl.className = 'offline';
-        };
+            eventSource.onerror = () => {
+                statusEl.textContent = '🔴 reconectando...';
+                statusEl.className = 'offline';
+            };
 
-        ['senha-criada', 'senha-chamada', 'senha-finalizada', 'senha-cancelada', 'sistema-resetado']
-            .forEach(evento => eventSource.addEventListener(evento, atualizarTudo));
-    }
+            ['senha-criada', 'senha-chamada', 'senha-finalizada', 'senha-cancelada', 'sistema-resetado']
+                .forEach(evento => eventSource.addEventListener(evento, atualizarTudo));
+        }
 
-    conectarEventos();
-    atualizarTudo();
-</script>
+        conectarEventos();
+        atualizarTudo();
+    </script>
 
 </body>
+
 </html>
