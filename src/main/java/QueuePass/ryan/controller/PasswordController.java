@@ -57,7 +57,6 @@ public class PasswordController {
         return passwordService.listarAguardando();
     }
 
-    // Diferencial: fila com posição e tempo estimado de espera
     @GetMapping("/senhas/aguardando/detalhado")
     public List<SenhaFilaDTO> listarFilaComEstimativa() {
         return passwordService.listarFilaComEstimativa();
@@ -73,7 +72,6 @@ public class PasswordController {
         return passwordService.listarTodas();
     }
 
-    // Diferencial: estatísticas em tempo real
     @GetMapping("/estatisticas")
     public EstatisticasDTO obterEstatisticas() {
         return passwordService.obterEstatisticas();
@@ -85,7 +83,6 @@ public class PasswordController {
         return ResponseEntity.noContent().build();
     }
 
-    // Diferencial: canal de eventos em tempo real (SSE)
     @GetMapping(path = "/eventos", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter eventos() {
         return passwordService.registrarEmitter();
